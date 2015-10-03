@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: CmsUno\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-18 12:09+0100\n"
+"PO-Revision-Date: 2015-08-18 12:09+0100\n"
+"Last-Translator: jacques Malgrange <contacter@boiteasite.fr>\n"
+"Language-Team: Jacques Malgrange <contacter@boiteasite.fr>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Report-\tmsgstr-Bugs-To: \n"
+"Report-\t\tmsgstr-Bugs-To: \n"
+"X-Poedit-KeywordsList: _\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Country: SPAIN\n"
+"X-Poedit-SourceCharset: iso-8859-1\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-SearchPath-0: ../../..\n"
+
+#: ../../../contactCall.php:20
+msgid "Captcha error"
+msgstr "Error de CAPTCHA"
+
+#: ../../../contactCall.php:63
+msgid "OK"
+msgstr "OK"
+
+#: ../../../contactCall.php:64
+msgid "Failed to send"
+msgstr "Fallo al enviar"
+
+#: ../../../contact.php:19
+msgid "This plugin allows you to create a contact form that can be installed at any location of the site."
+msgstr "Este plugin te permite crear un formulario de contacto que se puede instalar en cualquier ubicación del sitio."
+
+#: ../../../contact.php:20
+msgid "Just insert the code"
+msgstr "Sólo tiene que insertar el código"
+
+#: ../../../contact.php:20
+msgid "in the text of your page or directly into the template. This code will be replaced by the form."
+msgstr "en el texto de su página o directamente en la plantilla. Este código será reemplazado por el formulario."
+
+#: ../../../contact.php:23
+msgid "Admin email"
+msgstr "Admin email"
+
+#: ../../../contact.php:25
+msgid "E-mail address of destination : Your email address or the contact site."
+msgstr "E-mail de destino : Tu dirección de correo electrónico o en el sitio de contacto."
+
+#: ../../../contact.php:28
+msgid "Send button"
+msgstr "Enviar botón"
+
+#: ../../../contact.php:30
+msgid "The word that should appear on the 'Send' button."
+msgstr "La palabra que debe aparecer en el botón 'Enviar'."
+
+#: ../../../contact.php:33
+msgid "Thank you"
+msgstr "Gracias"
+
+#: ../../../contact.php:35
+msgid "The sentence of thanks that will be displayed on the screen after sending the message."
+msgstr "La frase de agradecimiento que se mostrará en la pantalla después de enviar el mensaje."
+
+#: ../../../contact.php:38
+msgid "Enable Captcha"
+msgstr "Habilitar Captcha"
+
+#: ../../../contact.php:40
+msgid "Code image to enter to block the automatic sending of email by robots."
+msgstr "La imagen del código para entrar en bloquear el envío de la automática de correo electrónico por robots."
+
+#: ../../../contact.php:43
+msgid "Add a field :"
+msgstr "Añadir un campo :"
+
+#: ../../../contact.php:46
+msgid "Label"
+msgstr "Label"
+
+#: ../../../contact.php:50
+msgid "Text"
+msgstr "Texto"
+
+#: ../../../contact.php:51
+msgid "Textarea"
+msgstr "Textarea"
+
+#: ../../../contact.php:54
+#: ../../../contact.php:61
+msgid "Save settings"
+msgstr "Guardar ajustes"
+
+#: ../../../contact.php:54
+msgid "Add"
+msgstr "Añadir"
+
+#: ../../../contact.php:57
+msgid "Result :"
+msgstr "Resultado :"
+
+#: ../../../contact.php:61
+msgid "Save"
+msgstr "Guardar"
+
+#: ../../../contact.php:83
+msgid "Backup performed"
+msgstr "Copia de seguridad realizada"
+
+#: ../../../contact.php:84
+msgid "Impossible backup"
+msgstr "Copia de seguridad Imposible"
+
+#: ../../../contactMake.php:29
+msgid "Copy this code"
+msgstr "Copea este código"
+
