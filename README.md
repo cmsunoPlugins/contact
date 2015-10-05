@@ -25,3 +25,5 @@ u::::::::::::::u  n::::n    n::::n  o:::::ooooo:::::o
 
 Allows to create a custom-made contact form with Captcha.
 Added with a Shortcode in the content of the page or directly in the template.
+
+[CMSUno](https://github.com/boiteasite/cmsuno)
