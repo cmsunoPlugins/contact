@@ -65,9 +65,19 @@ if (isset($_POST['action']))
 		// ********************************************************************************************
 		case 'save':
 		$q = file_get_contents('../../data/busy.json'); $a = json_decode($q,true); $Ubusy = $a['nom'];
+		if(!is_dir('../../data/_sdata-'.$sdata.'/'.$Ubusy.'/')) mkdir('../../data/_sdata-'.$sdata.'/'.$Ubusy.'/',0711);
 		$a = array(); $c=0;
-		$a['mail'] = $_POST['contactAdmin'];
-		$a['send'] = stripslashes($_POST['contactSend']);
+		if(!$_POST['contactAdmin'])
+			{
+			$q1 = @file_get_contents('../../data/_sdata-'.$sdata.'/ssite.json');
+			if($q1)
+				{
+				$a1 = json_decode($q1,true);
+				$a['mail'] = $a1['mel'];
+				}
+			}
+		else $a['mail'] = $_POST['contactAdmin'];
+		$a['send'] = (stripslashes($_POST['contactSend'])?stripslashes($_POST['contactSend']):'OK');
 		$a['happy'] = stripslashes($_POST['contactHappy']);
 		if ($_POST['contactCaptcha']=="true") $a['captcha']=1; else $a['captcha']=0;
 		foreach($_POST as $k=>$v)

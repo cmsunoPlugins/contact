@@ -60,7 +60,11 @@ if (isset($_POST['action']))
 		$msg.= $rn.$msgH.$rn;
 		$msg.= $rn."--".$boundary."--".$rn;
 		$msg.= $rn."--".$boundary."--".$rn;
-		if($l>10 && mail($mail, stripslashes($sujet), stripslashes($msg),$header)) echo _('OK')." ".$happy;
+		if($l>10 && mail($mail, stripslashes($sujet), stripslashes($msg),$header))
+			{
+			if(!$happy) echo _('OK');
+			else echo " ".$happy;
+			}
 		else echo _('Failed to send');
 		break;
 		// ********************************************************************************************

@@ -21,9 +21,14 @@ u::::::::::::::u  n::::n    n::::n  o:::::ooooo:::::o
      \____/           \/    \/            \__/
 </pre>
 
-### Contact ###
+## Contact ##
 
 Allows to create a custom-made contact form with Captcha.
 Added with a Shortcode in the content of the page or directly in the template.
 
 [CMSUno](https://github.com/boiteasite/cmsuno)
+
+### Versions ###
+
+* 1.0.1 - 05/11/2015 : Fix bugs and auto set default admin email
+* 1.0 - 05/10/2015 : First stable version

@@ -27,7 +27,7 @@ if(file_exists('data/_sdata-'.$sdata.'/'.$Ubusy.'/contact.json'))
 		$s1 .= '&contactCaptcha="+document.getElementById(\'contactCaptcha\').value+"';
 		$s2 .= 'document.getElementById(\'contactCaptcha\').value="";';
 		$o1 .= "\t\t".'<tr><td>Captcha :<br /><img src="" title="Captcha" id="imageCaptcha" style="height:30px; width:72px" /></td><td><input type="text" name="contactCaptcha" id="contactCaptcha" /><br />'._('Copy this code').'</td></tr>'."\r\n";
-		$Uonload .= 'var x=new XMLHttpRequest();x.open("POST","uno/plugins/contact/captcha.php",true);x.setRequestHeader("Content-type","application/x-www-form-urlencoded");x.onreadystatechange=function(){if(x.readyState==4 && x.status==200){document.getElementById("imageCaptcha").src=x.responseText;}};x.send();'."\r\n";
+		$Uonload .= 'var x=new XMLHttpRequest();x.open("POST","uno/plugins/contact/captcha.php",true);x.setRequestHeader("Content-type","application/x-www-form-urlencoded");x.setRequestHeader("X-Requested-With","XMLHttpRequest");x.onreadystatechange=function(){if(x.readyState==4 && x.status==200){document.getElementById("imageCaptcha").src=x.responseText;}};x.send();'."\r\n";
 		}
 	$o1 .= "\t\t".'<tr><td></td><td><button type="button" onClick="contactSend();">'.$a1['send'].'</button></td>'."\r\n";
 	$o1 .= "\t".'</table>'."\r\n".'</form>'."\r\n";
@@ -35,7 +35,7 @@ if(file_exists('data/_sdata-'.$sdata.'/'.$Ubusy.'/contact.json'))
 	$Uhtml = str_replace('[[contact]]',$o1,$Uhtml);
 	//
 	$o2 = '<script type="text/javascript">';
-	$o2 .= 'function contactSend(){x=new XMLHttpRequest();x.open("POST","uno/plugins/contact/contactCall.php",true);x.setRequestHeader("Content-type","application/x-www-form-urlencoded");x.setRequestHeader("X-Requested-With","XMLHttpRequest");x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){unoPop(x.responseText,5000);document.getElementById(\'contactCaptcha\').value=""}};x.send("action=send'.$s1.'");}';
+	$o2 .= 'function contactSend(){var x=new XMLHttpRequest(),p="action=send'.$s1.'";x.open("POST","uno/plugins/contact/contactCall.php",true);x.setRequestHeader("Content-type","application/x-www-form-urlencoded");x.setRequestHeader("X-Requested-With","XMLHttpRequest");x.setRequestHeader("Content-length",p.length);x.setRequestHeader("Connection","close");x.onreadystatechange=function(){if(x.readyState==4&&x.status==200){unoPop(x.responseText,5000);document.getElementById(\'contactCaptcha\').value=""}};x.send(p);}';
 	$o2 .= '</script>'."\r\n";
 	$unoPop=1; // include unoPop.js in output
 	$Ufoot .= $o2;
