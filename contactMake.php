@@ -5,7 +5,7 @@ if (!isset($_SESSION['cmsuno'])) exit();
 if(file_exists('data/_sdata-'.$sdata.'/'.$Ubusy.'/contact.json'))
 	{
 	// {"t":"te","l":"Pr\u00e9nom"}
-	$o1 = "\r\n".'<form id="contactfrm">'."\r\n\t".'<table>'."\r\n";
+	$o1 = "\r\n".'<div class="contactBloc">'."\r\n\t".'<form>'."\r\n";
 	$q1 = file_get_contents('data/_sdata-'.$sdata.'/'.$Ubusy.'/contact.json');
 	$a1 = json_decode($q1,true);
 	$s1 = '';
@@ -16,21 +16,21 @@ if(file_exists('data/_sdata-'.$sdata.'/'.$Ubusy.'/contact.json'))
 		$v2 = strtr($v2, 'באגהדוחיטךכםלמןסףעפצץתשûü‎ÿ -', 'aaaaaaceeeeiiiinooooouuuuyy__');
 		$v2 = preg_replace("/[^a-zA-Z0-9\d_]+/","",$v2);
 		$s1 .= '&'.$v2.'="+document.getElementById(\''.$v2.'\').value+"';
-		$o1 .= "\t\t".'<tr><td><label>'.stripslashes(str_replace('_',' ',$v1['l'])).'</label></td>';
-		if ($v1['t']=='te') $o1 .= '<td><input type="text" name="'.$v2.'" id="'.$v2.'" /></td>';
-		else if ($v1['t']=='ta') $o1 .= '<td><textarea name="'.$v2.'" id="'.$v2.'"></textarea></td>';
-		$o1 .= '</tr>'."\r\n";
+		$o1 .= "\t\t".'<label>'.stripslashes(str_replace('_',' ',$v1['l'])).'</label>';
+		if ($v1['t']=='te') $o1 .= '<input type="text" name="'.$v2.'" id="'.$v2.'" />'."\r\n";
+		else if ($v1['t']=='ta') $o1 .= '<textarea name="'.$v2.'" id="'.$v2.'"></textarea>'."\r\n";
 		$s2 .= 'document.getElementById(\''.$v2.'\').value="";';
 		}
 	if ($a1['captcha']==1)
 		{
 		$s1 .= '&contactCaptcha="+document.getElementById(\'contactCaptcha\').value+"';
 		$s2 .= 'document.getElementById(\'contactCaptcha\').value="";';
-		$o1 .= "\t\t".'<tr><td>Captcha :<br /><img src="" title="Captcha" id="imageCaptcha" style="height:30px; width:72px" /></td><td><input type="text" name="contactCaptcha" id="contactCaptcha" /><br />'._('Copy this code').'</td></tr>'."\r\n";
+		$o1 .= "\t\t".'<label>Captcha</label><input type="text" name="contactCaptcha" id="contactCaptcha" /><img src="" title="Captcha" id="imageCaptcha" style="height:30px; width:72px" />'."\r\n";
 		$Uonload .= 'var x=new XMLHttpRequest();x.open("POST","uno/plugins/contact/captcha.php",true);x.setRequestHeader("Content-type","application/x-www-form-urlencoded");x.setRequestHeader("X-Requested-With","XMLHttpRequest");x.onreadystatechange=function(){if(x.readyState==4 && x.status==200){document.getElementById("imageCaptcha").src=x.responseText;}};x.send();'."\r\n";
 		}
-	$o1 .= "\t\t".'<tr><td></td><td><button type="button" onClick="contactSend();">'.$a1['send'].'</button></td>'."\r\n";
-	$o1 .= "\t".'</table>'."\r\n".'</form>'."\r\n";
+	$o1 .= "\t\t".'<div><button type="button" onClick="contactSend();">'.$a1['send'].'</button></div>'."\r\n";
+	$o1 .= "\t".'</form>'."\r\n".'</div><!-- .contactBloc -->'."\r\n";
+	$Ustyle .= ".contactBloc{max-width:480px;margin:10px;}.contactBloc input,.contactBloc textarea{display:block;width:100%;margin:0 0 5px;padding:0}.contactBloc textarea{height:120px;}.contactBloc button{margin:7px 0 0;}#contactCaptcha{display:inline-block;margin:10px 0 10px 10px;max-width:80px;}#imageCaptcha{margin:-10px 10px;}\r\n";
 	$Ucontent = str_replace('[[contact]]',$o1,$Ucontent);
 	$Uhtml = str_replace('[[contact]]',$o1,$Uhtml);
 	//

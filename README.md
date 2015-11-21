@@ -30,5 +30,6 @@ Added with a Shortcode in the content of the page or directly in the template.
 
 ### Versions ###
 
+* 1.1 - 21/11/2015 : Remove Table structure.
 * 1.0.1 - 05/11/2015 : Fix bugs and auto set default admin email
 * 1.0 - 05/10/2015 : First stable version
