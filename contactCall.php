@@ -17,7 +17,7 @@ if (isset($_POST['action']))
 			session_start();
 			if ($_POST['contactCaptcha']!=$_SESSION['captcha']['code'])
 				{
-				echo _('Captcha error');
+				echo T_('Captcha error');
 				Exit;
 				}
 			}
@@ -62,10 +62,10 @@ if (isset($_POST['action']))
 		$msg.= $rn."--".$boundary."--".$rn;
 		if($l>10 && mail($mail, stripslashes($sujet), stripslashes($msg),$header))
 			{
-			if(!$happy) echo _('OK');
+			if(!$happy) echo T_('OK');
 			else echo " ".$happy;
 			}
-		else echo _('Failed to send');
+		else echo T_('Failed to send');
 		break;
 		// ********************************************************************************************
 		}

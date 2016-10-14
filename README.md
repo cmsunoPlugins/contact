@@ -30,6 +30,7 @@ Added with a Shortcode in the content of the page or directly in the template.
 
 ### Versions ###
 
+* 1.2 - 14/10/2016 : Use PHP-Gettext in place of gettext
 * 1.1.1 - 12/03/2016 : Update Simple-php-captcha.
 * 1.1 - 21/11/2015 : Remove Table structure.
 * 1.0.1 - 05/11/2015 : Fix bugs and auto set default admin email
