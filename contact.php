@@ -82,7 +82,7 @@ if (isset($_POST['action']))
 		if ($_POST['contactCaptcha']=="true") $a['captcha']=1; else $a['captcha']=0;
 		foreach($_POST as $k=>$v)
 			{
-			if ($k!='action' && $k!='unox' && $k!='contactAdmin' && $k!='contactSend' && $k!='contactHappy' && $k!='contactCaptcha')
+			if($k!='action' && $k!='unox' && $k!='contactAdmin' && $k!='contactSend' && $k!='contactHappy' && $k!='contactCaptcha')
 				{
 				$a['frm'][$c]['t'] = substr($k,0,2);
 				$a['frm'][$c]['l'] = stripslashes(substr($k,2));

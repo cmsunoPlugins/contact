@@ -14,7 +14,6 @@ function f_contact_load(){
 		});
 	});
 }
-//
 function f_contact_save(){
 	jQuery(document).ready(function(){
 		h=jQuery('#frmContact').serializeArray();
@@ -27,7 +26,6 @@ function f_contact_save(){
 		jQuery.post('uno/plugins/contact/contact.php',h,function(r){f_alert(r);});
 	});
 }
-//
 function f_contact_add(f,g){
 	a=document.getElementById('contactResult');
 	b=document.createElement('tr');

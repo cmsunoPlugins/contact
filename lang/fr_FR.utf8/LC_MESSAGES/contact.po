@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CmsUno\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-18 12:13+0100\n"
-"PO-Revision-Date: 2015-08-18 12:13+0100\n"
-"Last-Translator: jacques Malgrange <contacter@boiteasite.fr>\n"
+"POT-Creation-Date: 2017-03-07 11:17+0100\n"
+"PO-Revision-Date: 2017-03-07 11:17+0100\n"
+"Last-Translator: malgrange <jacques.malgrange@gmail.com>\n"
 "Language-Team: Jacques Malgrange <contacter@boiteasite.fr>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Report-\tmsgstr-Bugs-To: \n"
 "Report-\t\tmsgstr-Bugs-To: \n"
-"X-Poedit-KeywordsList: _\n"
+"X-Poedit-KeywordsList: _;T_\n"
 "X-Poedit-Basepath: .\n"
 "X-Poedit-Country: FRANCE\n"
 "X-Poedit-SourceCharset: iso-8859-1\n"
@@ -23,11 +23,13 @@ msgstr ""
 msgid "Captcha error"
 msgstr "Erreur du Captcha"
 
-#: ../../../contactCall.php:63
+#: ../../../contactCall.php:59
+#: ../../../contactCall.php:84
 msgid "OK"
 msgstr "OK"
 
-#: ../../../contactCall.php:64
+#: ../../../contactCall.php:62
+#: ../../../contactCall.php:87
 msgid "Failed to send"
 msgstr "Echec de l'envoi"
 
@@ -108,15 +110,13 @@ msgstr "R&eacute;sultat :"
 msgid "Save"
 msgstr "Enregistrer"
 
-#: ../../../contact.php:83
+#: ../../../contact.php:93
 msgid "Backup performed"
 msgstr "Sauvegarde effectu&eacute;e"
 
-#: ../../../contact.php:84
+#: ../../../contact.php:94
 msgid "Impossible backup"
 msgstr "Sauvegarde impossible"
 
-#: ../../../contactMake.php:29
-msgid "Copy this code"
-msgstr "Recopier le code"
-
+#~ msgid "Copy this code"
+#~ msgstr "Recopier le code"
