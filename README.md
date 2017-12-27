@@ -30,6 +30,7 @@ Added with a Shortcode in the content of the page or directly in the template.
 
 ### Versions ###
 
+* 1.3 - 27/12/2017 : W3.css compatibility
 * 1.2.2 - 15/03/2017 : Fix issue when unknow lang
 * 1.2.1 - 07/03/2017 : Send with PHPMailer if the Newsletter plugin is installed
 * 1.2 - 14/10/2016 : Use PHP-Gettext in place of gettext

@@ -17,7 +17,7 @@ if(isset($_POST['action']))
 			session_start();
 			if($_POST['contactCaptcha']!=$_SESSION['captcha']['code'])
 				{
-				echo T_('Captcha error');
+				echo '<h3>'.T_('Captcha error').'</h3>';
 				Exit;
 				}
 			}
@@ -47,14 +47,14 @@ if(isset($_POST['action']))
 			// PHPMailer
 			require '../newsletter/PHPMailer/PHPMailerAutoload.php';
 			$phm = new PHPMailer();
-			$phm->CharSet = "UTF-8";
+			$phm->charSet = "UTF-8";
 			$phm->setFrom($mail, 'No Reply');
-			$phm->AddAddress($mail);
+			$phm->addAddress($mail);
 			$phm->isHTML(true);
-			$phm->Subject = stripslashes($sujet);
-			$phm->Body = stripslashes($msgH);		
-			$phm->AltBody = stripslashes($msgT);
-			if($l>10 && $phm->Send())
+			$phm->subject = stripslashes($sujet);
+			$phm->body = stripslashes($msgH);		
+			$phm->altBody = stripslashes($msgT);
+			if($l>10 && $phm->send())
 				{
 				if(!$happy) echo T_('OK');
 				else echo ' '.$happy;
