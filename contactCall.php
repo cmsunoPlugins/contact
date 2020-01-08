@@ -21,45 +21,65 @@ if(isset($_POST['action']))
 				Exit;
 				}
 			}
-		include ('../../template/mailTemplate.php');
-		$bottom= str_replace('[[unsubscribe]]',"", $bottom); // template
+		include('../../template/mailTemplate.php');
+		$bottom = str_replace('[[unsubscribe]]',"", $bottom); // template
 		$msgT = "";
 		$msgH = $top . "<table>";
 		$q = file_get_contents('../../data/_sdata-'.$sdata.'/'.$Ubusy.'/contact.json'); $a = json_decode($q,true);
 		$q = file_get_contents('../../data/'.$Ubusy.'/site.json'); $b = json_decode($q,true);
 		$mail = $a['mail'];
 		$happy = $a['happy'];
+		$copy = array();
 		$l = 0;
 		foreach($_POST as $k=>$v)
 			{
 			if($k!='action')
 				{
 				$v = strip_tags($v);
-				$msgT .= $k.' : '.$v."\r\n";
-				$msgH .= '<tr><td>'.$k.'</td><td> : '.$v.'</td></tr>';
+				$kk = $k;
+				if(substr($k,0,5)=='mail0' && filter_var($v,FILTER_VALIDATE_EMAIL)) $copy[] = $v;
+				if(substr($k,0,5)=='text0' || substr($k,0,5)=='area0' || substr($k,0,5)=='mail0') $kk = substr($k,5);
+				$msgT .= $kk.' : '.$v."\r\n";
+				$msgH .= '<tr><td>'.$kk.'</td><td> : '.$v.'</td></tr>';
 				$l += strlen($v);
 				}
 			}
 		$msgH .= "</table>" . $bottom;
-		$sujet = $b['tit'] . " - Contact";
+		if(file_exists('../../template/'.$b['tem'].'/contactMailTemplate.php')) include('../../template/'.$b['tem'].'/contactMailTemplate.php'); // custom template with custom methods - $msgH
+		if(empty($a['subject'])) $sujet = $b['tit'] . " - Contact";
+		else $sujet = $a['subject'];
 		if(file_exists('../newsletter/PHPMailer/PHPMailerAutoload.php'))
 			{
 			// PHPMailer
 			require '../newsletter/PHPMailer/PHPMailerAutoload.php';
 			$phm = new PHPMailer();
-			$phm->charSet = "UTF-8";
+			$phm->CharSet = "UTF-8";
+			$phm->Encoding = "base64";
 			$phm->setFrom($mail, 'No Reply');
 			$phm->addAddress($mail);
 			$phm->isHTML(true);
-			$phm->subject = stripslashes($sujet);
-			$phm->body = stripslashes($msgH);		
-			$phm->altBody = stripslashes($msgT);
+			$phm->Subject = stripslashes($sujet);
+			$phm->Body = stripslashes($msgH);		
+			$phm->AltBody = stripslashes($msgT);
 			if($l>10 && $phm->send())
 				{
 				if(!$happy) echo T_('OK');
 				else echo ' '.$happy;
+				if(!empty($a['copy']) && !empty($copy))
+					{
+					$phm->ClearAllRecipients();
+					$phm->CharSet = "UTF-8";
+					$phm->Encoding = "base64";
+					$phm->setFrom($mail, 'No Reply');
+					foreach($copy as $r) $phm->addAddress($r);
+					$phm->isHTML(true);
+					$phm->Subject = stripslashes($sujet);
+					$phm->Body = stripslashes($msgH);		
+					$phm->AltBody = stripslashes($msgT);
+					$phm->send();
+					}
 				}
-			else echo T_('Failed to send');
+			else echo T_('Failed to send').' : '.$phm->ErrorInfo;
 			}
 		else
 			{
@@ -79,10 +99,14 @@ if(isset($_POST['action']))
 			$msg.= $rn.$msgH.$rn;
 			$msg.= $rn."--".$boundary."--".$rn;
 			$msg.= $rn."--".$boundary."--".$rn;
-			if($l>10 && mail($mail, stripslashes($sujet), stripslashes($msg),$header))
+			if($l>10 && mail($mail, stripslashes($sujet), stripslashes($msg), $header))
 				{
 				if(!$happy) echo T_('OK');
 				else echo " ".$happy;
+				if(!empty($a['copy']) && !empty($copy))
+					{
+					foreach($copy as $r) mail($r, stripslashes($sujet), stripslashes($msg), $header);
+					}
 				}
 			else echo T_('Failed to send');
 			}

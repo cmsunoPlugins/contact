@@ -15,10 +15,23 @@ if(file_exists('data/_sdata-'.$sdata.'/'.$Ubusy.'/contact.json'))
 		$v2 = stripslashes(utf8_decode($v1['l']));
 		$v2 = strtr($v2, 'באגהדוחיטךכםלמןסףעפצץתשûü‎ÿ -', 'aaaaaaceeeeiiiinooooouuuuyy__');
 		$v2 = preg_replace("/[^a-zA-Z0-9\d_]+/","",$v2);
-		$s1 .= '&'.$v2.'="+document.getElementById(\''.$v2.'\').value+"';
 		$o1 .= "\t\t".'<div class="w3-section"><label>'.stripslashes(str_replace('_',' ',$v1['l'])).'</label>';
-		if ($v1['t']=='te') $o1 .= '<input class="'.(isset($Uw3['input']['w3-input'])?$Uw3['input']['w3-input']:'w3-input').'" type="text" name="'.$v2.'" id="'.$v2.'" />';
-		else if ($v1['t']=='ta') $o1 .= '<textarea class="'.(isset($Uw3['input']['w3-input'])?$Uw3['input']['w3-input']:'w3-input').'" name="'.$v2.'" id="'.$v2.'"></textarea>';;
+		if($v1['t']=='te')
+			{
+			$v2 = 'text0'.$v2;
+			$o1 .= '<input class="'.(isset($Uw3['input']['w3-input'])?$Uw3['input']['w3-input']:'w3-input').'" type="text" name="'.$v2.'" id="'.$v2.'" />';
+			}
+		else if($v1['t']=='tm')
+			{
+			$v2 = 'mail0'.$v2;
+			$o1 .= '<input class="'.(isset($Uw3['input']['w3-input'])?$Uw3['input']['w3-input']:'w3-input').'" type="email" name="'.$v2.'" id="'.$v2.'" />';
+			}
+		else if($v1['t']=='ta')
+			{
+			$v2 = 'area0'.$v2;
+			$o1 .= '<textarea class="'.(isset($Uw3['input']['w3-input'])?$Uw3['input']['w3-input']:'w3-input').'" name="'.$v2.'" id="'.$v2.'"></textarea>';
+			}
+		$s1 .= '&'.$v2.'="+document.getElementById(\''.$v2.'\').value+"';
 		$o1 .= '</div>'."\r\n";
 		$s2 .= 'document.getElementById(\''.$v2.'\').value="";';
 		}

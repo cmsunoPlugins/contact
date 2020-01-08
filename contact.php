@@ -35,9 +35,19 @@ if (isset($_POST['action']))
 					<td><em><?php echo T_("The sentence of thanks that will be displayed on the screen after sending the message.");?></em></td>
 				</tr>
 				<tr>
+					<td><label><?php echo T_("Subject");?></label></td>
+					<td><input type="text" class="input" name="contactSubject" id="contactSubject" /></td>
+					<td><em><?php echo T_("The title of the email for sending. Empty => Site title - Contact");?></em></td>
+				</tr>
+				<tr>
 					<td><label><?php echo T_("Enable Captcha");?></label></td>
 					<td><input type="checkbox" class="input"  name="contactCaptcha" id="contactCaptcha" /></td>
 					<td><em><?php echo T_("Code image to enter to block the automatic sending of email by robots.");?></em></td>
+				</tr>
+				<tr>
+					<td><label><?php echo T_("Mail to author");?></label></td>
+					<td><input type="checkbox" class="input"  name="contactCopy" id="contactCopy" /></td>
+					<td><em><?php echo T_("Send a copy to the emails of the form.").' ('.T_("Text email").')';?></em></td>
 				</tr>
 			</table>
 			<h3><?php echo T_("Add a field :");?></h3>
@@ -48,6 +58,7 @@ if (isset($_POST['action']))
 						<input type="text" class="input" name="contactLabel" id="contactLabel" value="" />
 						<select name="contactType" id="contactType" />
 							<option value="te"><?php echo T_("Text");?></option>
+							<option value="tm"><?php echo T_("Text email");?></option>
 							<option value="ta"><?php echo T_("Textarea");?></option>
 						</select>
 					</td>
@@ -79,10 +90,12 @@ if (isset($_POST['action']))
 		else $a['mail'] = $_POST['contactAdmin'];
 		$a['send'] = (stripslashes($_POST['contactSend'])?stripslashes($_POST['contactSend']):'OK');
 		$a['happy'] = stripslashes($_POST['contactHappy']);
-		if ($_POST['contactCaptcha']=="true") $a['captcha']=1; else $a['captcha']=0;
+		$a['subject'] = stripslashes($_POST['contactSubject']);
+		if($_POST['contactCaptcha']=="true") $a['captcha']=1; else $a['captcha']=0;
+		if($_POST['contactCopy']=="true") $a['copy']=1; else $a['copy']=0;
 		foreach($_POST as $k=>$v)
 			{
-			if($k!='action' && $k!='unox' && $k!='contactAdmin' && $k!='contactSend' && $k!='contactHappy' && $k!='contactCaptcha')
+			if($k!='action' && $k!='unox' && $k!='contactAdmin' && $k!='contactSend' && $k!='contactHappy' && $k!='contactCaptcha' && $k!='contactSubject' && $k!='contactCopy')
 				{
 				$a['frm'][$c]['t'] = substr($k,0,2);
 				$a['frm'][$c]['l'] = stripslashes(substr($k,2));

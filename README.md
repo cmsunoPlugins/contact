@@ -28,8 +28,19 @@ Added with a Shortcode in the content of the page or directly in the template.
 
 [CMSUno](https://github.com/boiteasite/cmsuno)
 
+### PHPMailer ###
+
+If Newsletter plugin exists, PHPMailer is used (recommended). Otherwise, PHP mail function is used.
+
+### Template ###
+
+The default template is uno/template/mailTemplate.php.
+You can create a more sophisticate custom template in your template theme folder. The name must be : uno/template/mytheme/contactMailTemplate.php
+This contactMailTemplate.php should create the HTML email content : $msgH.
+
 ### Versions ###
 
+* 1.4 - 08/01/2020 : Fix PHPMailer issue - Custom template - Copy to sender - Custom subject
 * 1.3 - 27/12/2017 : W3.css compatibility
 * 1.2.2 - 15/03/2017 : Fix issue when unknow lang
 * 1.2.1 - 07/03/2017 : Send with PHPMailer if the Newsletter plugin is installed
