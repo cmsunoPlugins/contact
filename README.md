@@ -36,10 +36,11 @@ If Newsletter plugin exists, PHPMailer is used (recommended). Otherwise, PHP mai
 
 The default template is uno/template/mailTemplate.php.
 You can create a more sophisticate custom template in your template theme folder. The name must be : uno/template/mytheme/contactMailTemplate.php
-This contactMailTemplate.php should create the HTML email content : $msgH.
+This contactMailTemplate.php should create the HTML email content : $msgH. It will be necessary to use the data of the POST array var.
 
 ### Versions ###
 
+* 1.5 - xx/03/2020 : Master mode
 * 1.4 - 08/01/2020 : Fix PHPMailer issue - Custom template - Copy to sender - Custom subject
 * 1.3 - 27/12/2017 : W3.css compatibility
 * 1.2.2 - 15/03/2017 : Fix issue when unknow lang

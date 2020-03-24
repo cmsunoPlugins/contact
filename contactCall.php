@@ -2,39 +2,40 @@
 if(!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || strtolower($_SERVER['HTTP_X_REQUESTED_WITH'])!='xmlhttprequest') {sleep(2);exit;} // ajax request
 ?>
 <?php
-include('../../config.php');
+include('../../config.php'); // $sdata
 include('lang/lang.php');
 // ********************* actions *************************************************************************
-if(isset($_POST['action']))
-	{
-	switch($_POST['action'])
-		{
+if(isset($_POST['action'])) {
+	switch($_POST['action']) {
 		// ********************************************************************************************
 		case 'send':
-		$q = file_get_contents('../../data/busy.json'); $a = json_decode($q,true); $Ubusy = $a['nom'];
-		if(isset($_POST['contactCaptcha']))
-			{
+		$q = file_get_contents('../../data/busy.json'); $a = json_decode($q,true);
+		$Ubusy = (!empty($a['nom'])?$a['nom']:'');
+		$Umaster = (!empty($a['master'])?$a['master']:'');
+		$busy = $Ubusy;
+		if($Umaster && file_exists('../../data/contactMaster.txt') && file_exists('../../data/_sdata-'.$sdata.'/'.$Umaster.'/contact.json')) $busy = $Umaster;
+		if(isset($_POST['contactCaptcha'])) {
 			session_start();
-			if($_POST['contactCaptcha']!=$_SESSION['captcha']['code'])
-				{
+			if($_POST['contactCaptcha']!=$_SESSION['captcha']['code']) {
 				echo '<h3>'.T_('Captcha error').'</h3>';
 				Exit;
-				}
 			}
+		}
 		include('../../template/mailTemplate.php');
 		$bottom = str_replace('[[unsubscribe]]',"", $bottom); // template
 		$msgT = "";
 		$msgH = $top . "<table>";
-		$q = file_get_contents('../../data/_sdata-'.$sdata.'/'.$Ubusy.'/contact.json'); $a = json_decode($q,true);
-		$q = file_get_contents('../../data/'.$Ubusy.'/site.json'); $b = json_decode($q,true);
-		$mail = $a['mail'];
-		$happy = $a['happy'];
+		$a = false; $b = false; $c = false;
+		$q = file_get_contents('../../data/_sdata-'.$sdata.'/ssite.json'); if($q) $a = json_decode($q,true);
+		$q = file_get_contents('../../data/'.$busy.'/site.json'); if($q) $b = json_decode($q,true); // mail template
+		$q = file_get_contents('../../data/_sdata-'.$sdata.'/'.$busy.'/contact.json'); $c = json_decode($q,true);
+		$mailadm = (!empty($c['mail'])?$c['mail']:$a['mel']);
+		if(!filter_var($mailadm, FILTER_VALIDATE_EMAIL)) die;
+		$happy = (!empty($c['happy'])?$c['happy']:'');
 		$copy = array();
 		$l = 0;
-		foreach($_POST as $k=>$v)
-			{
-			if($k!='action')
-				{
+		foreach($_POST as $k=>$v) {
+			if($k!='action') {
 				$v = strip_tags($v);
 				$kk = $k;
 				if(substr($k,0,5)=='mail0' && filter_var($v,FILTER_VALIDATE_EMAIL)) $copy[] = $v;
@@ -42,51 +43,51 @@ if(isset($_POST['action']))
 				$msgT .= $kk.' : '.$v."\r\n";
 				$msgH .= '<tr><td>'.$kk.'</td><td> : '.$v.'</td></tr>';
 				$l += strlen($v);
-				}
 			}
+		}
 		$msgH .= "</table>" . $bottom;
 		if(file_exists('../../template/'.$b['tem'].'/contactMailTemplate.php')) include('../../template/'.$b['tem'].'/contactMailTemplate.php'); // custom template with custom methods - $msgH
 		if(empty($a['subject'])) $sujet = $b['tit'] . " - Contact";
 		else $sujet = $a['subject'];
-		if(file_exists('../newsletter/PHPMailer/PHPMailerAutoload.php'))
-			{
+		if(file_exists('../newsletter/PHPMailer/PHPMailerAutoload.php')) {
 			// PHPMailer
 			require '../newsletter/PHPMailer/PHPMailerAutoload.php';
 			$phm = new PHPMailer();
 			$phm->CharSet = "UTF-8";
 			$phm->Encoding = "base64";
-			$phm->setFrom($mail, 'No Reply');
-			$phm->addAddress($mail);
+			$phm->setFrom($mailadm, 'No Reply');
+			$phm->addAddress($mailadm);
 			$phm->isHTML(true);
 			$phm->Subject = stripslashes($sujet);
 			$phm->Body = stripslashes($msgH);		
 			$phm->AltBody = stripslashes($msgT);
-			if($l>10 && $phm->send())
-				{
+			if($l>10 && $phm->send()) {
 				if(!$happy) echo T_('OK');
 				else echo ' '.$happy;
-				if(!empty($a['copy']) && !empty($copy))
-					{
+				if(!empty($c['copy']) && !empty($copy)) {
+					$ncopy = 0;
 					$phm->ClearAllRecipients();
 					$phm->CharSet = "UTF-8";
 					$phm->Encoding = "base64";
 					$phm->setFrom($mail, 'No Reply');
-					foreach($copy as $r) $phm->addAddress($r);
+					foreach($copy as $r) {
+						if(filter_var($r, FILTER_VALIDATE_EMAIL)) $phm->addAddress($r);
+						++$ncopy;
+					}
 					$phm->isHTML(true);
 					$phm->Subject = stripslashes($sujet);
 					$phm->Body = stripslashes($msgH);		
 					$phm->AltBody = stripslashes($msgT);
-					$phm->send();
-					}
+					if($ncopy) $phm->send();
 				}
-			else echo T_('Failed to send').' : '.$phm->ErrorInfo;
 			}
-		else
-			{
+			else echo T_('Failed to send').' : '.$phm->ErrorInfo;
+		}
+		else {
 			$boundary = "-----=".md5(rand());
-			if(!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mail)) $rn = "\r\n";
+			if(!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mailadm)) $rn = "\r\n";
 			else $rn = "\n";
-			$header = "From: \"No reply\"<".$mail.">".$rn;
+			$header = "From: \"No reply\"<".$mailadm.">".$rn;
 			$header.= "MIME-Version: 1.0".$rn;
 			$header.= "Content-Type: multipart/alternative;".$rn." boundary=\"$boundary\"".$rn;
 			$msg= $rn."--".$boundary.$rn;
@@ -99,21 +100,19 @@ if(isset($_POST['action']))
 			$msg.= $rn.$msgH.$rn;
 			$msg.= $rn."--".$boundary."--".$rn;
 			$msg.= $rn."--".$boundary."--".$rn;
-			if($l>10 && mail($mail, stripslashes($sujet), stripslashes($msg), $header))
-				{
+			if($l>10 && mail($mailadm, stripslashes($sujet), stripslashes($msg), $header)) {
 				if(!$happy) echo T_('OK');
 				else echo " ".$happy;
-				if(!empty($a['copy']) && !empty($copy))
-					{
-					foreach($copy as $r) mail($r, stripslashes($sujet), stripslashes($msg), $header);
-					}
+				if(!empty($c['copy']) && !empty($copy)) {
+					foreach($copy as $r) if(filter_var($r, FILTER_VALIDATE_EMAIL)) mail($r, stripslashes($sujet), stripslashes($msg), $header);
 				}
-			else echo T_('Failed to send');
 			}
+			else echo T_('Failed to send');
+		}
 		break;
 		// ********************************************************************************************
-		}
+	}
 	clearstatcache();
 	exit;
-	}
+}
 ?>
