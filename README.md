@@ -40,7 +40,8 @@ This contactMailTemplate.php should create the HTML email content : $msgH. It wi
 
 ### Versions ###
 
-* 1.5 - xx/03/2020 : Master mode
+* 1.6 - 07/10/2020 : Admin can reply to email field if exists. User reply to Admin (no change).
+* 1.5 - 24/03/2020 : Master mode
 * 1.4 - 08/01/2020 : Fix PHPMailer issue - Custom template - Copy to sender - Custom subject
 * 1.3 - 27/12/2017 : W3.css compatibility
 * 1.2.2 - 15/03/2017 : Fix issue when unknow lang

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: CmsUno\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-08 11:47+0100\n"
-"PO-Revision-Date: 2020-01-08 11:49+0100\n"
+"POT-Creation-Date: 2020-10-07 19:19+0200\n"
+"PO-Revision-Date: 2020-10-07 19:23+0200\n"
 "Last-Translator: malgrange <jacques.malgrange@gmail.com>\n"
 "Language-Team: Jacques Malgrange <contacter@boiteasite.fr>\n"
 "Language: fr_FR\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-SearchPath-0: ../../..\n"
 
-#: ../../../contact.php:19
+#: ../../../contact.php:22
 msgid ""
 "This plugin allows you to create a contact form that can be installed at any "
 "location of the site."
@@ -26,11 +26,11 @@ msgstr ""
 "Ce plugin permet de cr&eacute;er un formulaire de contact pouvant "
 "s'installer &agrave; n'importe quel endroit du site."
 
-#: ../../../contact.php:20
+#: ../../../contact.php:23
 msgid "Just insert the code"
 msgstr "Il suffit d'ins&eacute;rer le code"
 
-#: ../../../contact.php:20
+#: ../../../contact.php:23
 msgid ""
 "in the text of your page or directly into the template. This code will be "
 "replaced by the form."
@@ -38,28 +38,44 @@ msgstr ""
 "dans le texte de votre page ou bien directement dans le template. Ce code "
 "sera remplac&eacute; par le formulaire."
 
-#: ../../../contact.php:23
+#: ../../../contact.php:26
+msgid "Master mode activated."
+msgstr "Mode maître activé."
+
+#: ../../../contact.php:28
+msgid "Config the plugin in the master page : "
+msgstr "Configurez le plugin dans la page maître :"
+
+#: ../../../contact.php:35
 msgid "Admin email"
 msgstr "Admin email"
 
-#: ../../../contact.php:25
+#: ../../../contact.php:37
 msgid "E-mail address of destination : Your email address or the contact site."
 msgstr ""
 "Adresse mail de destination : Votre adresse mail ou celle de contact du site."
 
-#: ../../../contact.php:28
+#: ../../../contact.php:40
+msgid "Name"
+msgstr "Nom"
+
+#: ../../../contact.php:42
+msgid "The name for your email address."
+msgstr "Le nom pour votre adresse email."
+
+#: ../../../contact.php:45
 msgid "Send button"
 msgstr "Bouton Envoyer"
 
-#: ../../../contact.php:30
+#: ../../../contact.php:47
 msgid "The word that should appear on the 'Send' button."
 msgstr "Le mot qui doit appara&icirc;tre sur le bouton pour envoyer."
 
-#: ../../../contact.php:33
+#: ../../../contact.php:50
 msgid "Thank you"
 msgstr "Merci"
 
-#: ../../../contact.php:35
+#: ../../../contact.php:52
 msgid ""
 "The sentence of thanks that will be displayed on the screen after sending "
 "the message."
@@ -67,73 +83,94 @@ msgstr ""
 "La phrase de remerciement qui s'affichera &agrave; l'&eacute;cran apr&egrave;"
 "s envoi du message."
 
-#: ../../../contact.php:38
+#: ../../../contact.php:55
 msgid "Subject"
 msgstr "Sujet"
 
-#: ../../../contact.php:40
+#: ../../../contact.php:57
 msgid "The title of the email for sending. Empty => Site title - Contact"
 msgstr "Le titre du mail. Vide => Titre du site - Contact"
 
-#: ../../../contact.php:43
+#: ../../../contact.php:60
 msgid "Enable Captcha"
 msgstr "Activer Captcha"
 
-#: ../../../contact.php:45
+#: ../../../contact.php:62
 msgid "Code image to enter to block the automatic sending of email by robots."
 msgstr ""
 "Code image &agrave; entrer pour bloquer l'envoi automatique de mail par des "
 "robots."
 
-#: ../../../contact.php:48
+#: ../../../contact.php:65
 msgid "Mail to author"
 msgstr "Email vers l'auteur"
 
-#: ../../../contact.php:50
+#: ../../../contact.php:67
 msgid "Send a copy to the emails of the form."
 msgstr "Envoi une copie du mail vers le rédacteur."
 
-#: ../../../contact.php:50 ../../../contact.php:61
+#: ../../../contact.php:67 ../../../contact.php:88
 msgid "Text email"
 msgstr "Text email"
 
-#: ../../../contact.php:53
+#: ../../../contact.php:70
+msgid "Master mode"
+msgstr "Mode Maître"
+
+#: ../../../contact.php:72
+msgid ""
+"In multipage site, the configuration will be centralized on the master page."
+msgstr ""
+"Dans un site multi-page, la configuration sera centralisée sur la page "
+"maître."
+
+#: ../../../contact.php:75
+msgid "Reply to the email"
+msgstr "Répondre à l'email"
+
+#: ../../../contact.php:77
+msgid "Reply to the first email field if exists. Default is admin email."
+msgstr ""
+"Répondre au premier champ email s'il existe. La valeur par défaut est "
+"l'adresse email de l'admin."
+
+#: ../../../contact.php:80
 msgid "Add a field :"
 msgstr "Ajouter un champ :"
 
-#: ../../../contact.php:56
+#: ../../../contact.php:83
 msgid "Label"
 msgstr "Label"
 
-#: ../../../contact.php:60
+#: ../../../contact.php:87
 msgid "Text"
 msgstr "Text"
 
-#: ../../../contact.php:62
+#: ../../../contact.php:89
 msgid "Textarea"
 msgstr "Textarea"
 
-#: ../../../contact.php:65 ../../../contact.php:72
+#: ../../../contact.php:92 ../../../contact.php:99
 msgid "Save settings"
 msgstr "Enregistre les param&egrave;tres"
 
-#: ../../../contact.php:65
+#: ../../../contact.php:92
 msgid "Add"
 msgstr "Ajouter"
 
-#: ../../../contact.php:68
+#: ../../../contact.php:95
 msgid "Result :"
 msgstr "R&eacute;sultat :"
 
-#: ../../../contact.php:72
+#: ../../../contact.php:99
 msgid "Save"
 msgstr "Enregistrer"
 
-#: ../../../contact.php:106
+#: ../../../contact.php:135
 msgid "Backup performed"
 msgstr "Sauvegarde effectu&eacute;e"
 
-#: ../../../contact.php:107
+#: ../../../contact.php:136
 msgid "Impossible backup"
 msgstr "Sauvegarde impossible"
 
@@ -141,11 +178,11 @@ msgstr "Sauvegarde impossible"
 msgid "Captcha error"
 msgstr "Erreur du Captcha"
 
-#: ../../../contactCall.php:66 ../../../contactCall.php:104
+#: ../../../contactCall.php:72 ../../../contactCall.php:111
 msgid "OK"
 msgstr "OK"
 
-#: ../../../contactCall.php:82 ../../../contactCall.php:111
+#: ../../../contactCall.php:91 ../../../contactCall.php:132
 msgid "Failed to send"
 msgstr "Echec de l'envoi"
 

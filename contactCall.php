@@ -32,19 +32,26 @@ if(isset($_POST['action'])) {
 		$mailadm = (!empty($c['mail'])?$c['mail']:$a['mel']);
 		if(!filter_var($mailadm, FILTER_VALIDATE_EMAIL)) die;
 		$happy = (!empty($c['happy'])?$c['happy']:'');
+		$name = (!empty($c['name'])?$c['name']:'No Reply');
 		$copy = array();
 		$l = 0;
+		$reply = (!empty($c['reply'])?'':false);
 		foreach($_POST as $k=>$v) {
 			if($k!='action') {
 				$v = strip_tags($v);
 				$kk = $k;
-				if(substr($k,0,5)=='mail0' && filter_var($v,FILTER_VALIDATE_EMAIL)) $copy[] = $v;
+				if(substr($k,0,5)=='mail0' && filter_var($v,FILTER_VALIDATE_EMAIL)) {
+					$copy[] = $v;
+					if($reply==='') $reply = $v;
+				}
 				if(substr($k,0,5)=='text0' || substr($k,0,5)=='area0' || substr($k,0,5)=='mail0') $kk = substr($k,5);
 				$msgT .= $kk.' : '.$v."\r\n";
 				$msgH .= '<tr><td>'.$kk.'</td><td> : '.$v.'</td></tr>';
 				$l += strlen($v);
 			}
 		}
+		$name2 = (!empty($reply)?'User':$name);
+		if(empty($reply)) $reply = $mailadm;
 		$msgH .= "</table>" . $bottom;
 		if(file_exists('../../template/'.$b['tem'].'/contactMailTemplate.php')) include('../../template/'.$b['tem'].'/contactMailTemplate.php'); // custom template with custom methods - $msgH
 		if(empty($a['subject'])) $sujet = $b['tit'] . " - Contact";
@@ -55,7 +62,7 @@ if(isset($_POST['action'])) {
 			$phm = new PHPMailer();
 			$phm->CharSet = "UTF-8";
 			$phm->Encoding = "base64";
-			$phm->setFrom($mailadm, 'No Reply');
+			$phm->setFrom($reply, $name2);
 			$phm->addAddress($mailadm);
 			$phm->isHTML(true);
 			$phm->Subject = stripslashes($sujet);
@@ -69,7 +76,7 @@ if(isset($_POST['action'])) {
 					$phm->ClearAllRecipients();
 					$phm->CharSet = "UTF-8";
 					$phm->Encoding = "base64";
-					$phm->setFrom($mail, 'No Reply');
+					$phm->setFrom($mailadm, $name);
 					foreach($copy as $r) {
 						if(filter_var($r, FILTER_VALIDATE_EMAIL)) $phm->addAddress($r);
 						++$ncopy;
@@ -85,9 +92,9 @@ if(isset($_POST['action'])) {
 		}
 		else {
 			$boundary = "-----=".md5(rand());
-			if(!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mailadm)) $rn = "\r\n";
+			if(!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $reply)) $rn = "\r\n";
 			else $rn = "\n";
-			$header = "From: \"No reply\"<".$mailadm.">".$rn;
+			$header = "From: \"".$name2."\"<".$reply.">".$rn;
 			$header.= "MIME-Version: 1.0".$rn;
 			$header.= "Content-Type: multipart/alternative;".$rn." boundary=\"$boundary\"".$rn;
 			$msg= $rn."--".$boundary.$rn;
@@ -104,6 +111,21 @@ if(isset($_POST['action'])) {
 				if(!$happy) echo T_('OK');
 				else echo " ".$happy;
 				if(!empty($c['copy']) && !empty($copy)) {
+					if(!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mailadm)) $rn = "\r\n";
+					else $rn = "\n";
+					$header = "From: \"".$name."\"<".$mailadm.">".$rn;
+					$header.= "MIME-Version: 1.0".$rn;
+					$header.= "Content-Type: multipart/alternative;".$rn." boundary=\"$boundary\"".$rn;
+					$msg= $rn."--".$boundary.$rn;
+					$msg.= "Content-Type: text/plain; charset=\"utf-8\"".$rn;
+					$msg.= "Content-Transfer-Encoding: 8bit".$rn;
+					$msg.= $rn.$msgT.$rn;
+					$msg.= $rn."--".$boundary.$rn;
+					$msg.= "Content-Type: text/html; charset=\"utf-8\"".$rn;
+					$msg.= "Content-Transfer-Encoding: 8bit".$rn;
+					$msg.= $rn.$msgH.$rn;
+					$msg.= $rn."--".$boundary."--".$rn;
+					$msg.= $rn."--".$boundary."--".$rn;
 					foreach($copy as $r) if(filter_var($r, FILTER_VALIDATE_EMAIL)) mail($r, stripslashes($sujet), stripslashes($msg), $header);
 				}
 			}

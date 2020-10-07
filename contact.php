@@ -37,6 +37,11 @@ if(isset($_POST['action'])) {
 					<td><em><?php echo T_("E-mail address of destination : Your email address or the contact site.");?></em></td>
 				</tr>
 				<tr>
+					<td><label><?php echo T_("Name");?></label></td>
+					<td><input type="text" class="input" name="contactName" id="contactName" /></td>
+					<td><em><?php echo T_("The name for your email address.");?></em></td>
+				</tr>
+				<tr>
 					<td><label><?php echo T_("Send button");?></label></td>
 					<td><input type="text" class="input" name="contactSend" id="contactSend" /></td>
 					<td><em><?php echo T_("The word that should appear on the 'Send' button.");?></em></td>
@@ -53,18 +58,23 @@ if(isset($_POST['action'])) {
 				</tr>
 				<tr>
 					<td><label><?php echo T_("Enable Captcha");?></label></td>
-					<td><input type="checkbox" class="input"  name="contactCaptcha" id="contactCaptcha" /></td>
+					<td><input type="checkbox" class="input" name="contactCaptcha" id="contactCaptcha" /></td>
 					<td><em><?php echo T_("Code image to enter to block the automatic sending of email by robots.");?></em></td>
 				</tr>
 				<tr>
 					<td><label><?php echo T_("Mail to author");?></label></td>
-					<td><input type="checkbox" class="input"  name="contactCopy" id="contactCopy" /></td>
+					<td><input type="checkbox" class="input" name="contactCopy" id="contactCopy" /></td>
 					<td><em><?php echo T_("Send a copy to the emails of the form.").' ('.T_("Text email").')';?></em></td>
 				</tr>
 				<tr>
 					<td><label><?php echo T_("Master mode");?></label></td>
-					<td><input type="checkbox" class="input"  name="contactMaster" id="contactMaster" /></td>
+					<td><input type="checkbox" class="input" name="contactMaster" id="contactMaster" /></td>
 					<td><em><?php echo T_("In multipage site, the configuration will be centralized on the master page.");?></em></td>
+				</tr>
+				<tr>
+					<td><label><?php echo T_("Reply to the email");?></label></td>
+					<td><input type="checkbox" class="input" name="contactReply" id="contactReply" /></td>
+					<td><em><?php echo T_("Reply to the first email field if exists. Default is admin email.");?></em></td>
 				</tr>
 			</table>
 			<h3><?php echo T_("Add a field :");?></h3>
@@ -105,14 +115,17 @@ if(isset($_POST['action'])) {
 		}
 		else $a['mail'] = $_POST['contactAdmin'];
 		$a['send'] = (stripslashes($_POST['contactSend'])?stripslashes($_POST['contactSend']):'OK');
+		$a['name'] = (!empty($_POST['contactName'])?stripslashes($_POST['contactName']):'No Reply');
 		$a['happy'] = stripslashes($_POST['contactHappy']);
 		$a['subject'] = stripslashes($_POST['contactSubject']);
 		if($_POST['contactMaster']=="true" && !file_exists('../../data/contactMaster.txt')) file_put_contents('../../data/contactMaster.txt', '1');
 		else if($_POST['contactMaster']!="true" && file_exists('../../data/contactMaster.txt')) unlink('../../data/contactMaster.txt');
 		if($_POST['contactCaptcha']=="true") $a['captcha']=1; else $a['captcha']=0;
 		if($_POST['contactCopy']=="true") $a['copy']=1; else $a['copy']=0;
+		if($_POST['contactReply']=="true") $a['reply']=1; else $a['reply']=0;
+		$b = array('action','unox','contactAdmin','contactName','contactSend','contactHappy','contactCaptcha','contactSubject','contactCopy','contactMaster','contactReply');
 		foreach($_POST as $k=>$v) {
-			if($k!='action' && $k!='unox' && $k!='contactAdmin' && $k!='contactSend' && $k!='contactHappy' && $k!='contactCaptcha' && $k!='contactSubject' && $k!='contactCopy' && $k!='contactMaster') {
+			if(!in_array($k,$b)) {
 				$a['frm'][$c]['t'] = substr($k,0,2);
 				$a['frm'][$c]['l'] = stripslashes(substr($k,2));
 			}
