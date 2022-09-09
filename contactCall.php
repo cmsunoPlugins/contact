@@ -62,6 +62,7 @@ if(isset($_POST['action'])) {
 			$phm = new PHPMailer();
 			$phm->CharSet = "UTF-8";
 			$phm->Encoding = "base64";
+			$phm->addReplyTo($reply, $name2); // before setFrom !
 			$phm->setFrom($reply, $name2);
 			$phm->addAddress($mailadm);
 			$phm->isHTML(true);
@@ -76,6 +77,7 @@ if(isset($_POST['action'])) {
 					$phm->ClearAllRecipients();
 					$phm->CharSet = "UTF-8";
 					$phm->Encoding = "base64";
+					$phm->addReplyTo($mailadm, $name); // before setFrom !
 					$phm->setFrom($mailadm, $name);
 					foreach($copy as $r) {
 						if(filter_var($r, FILTER_VALIDATE_EMAIL)) $phm->addAddress($r);
@@ -95,7 +97,9 @@ if(isset($_POST['action'])) {
 			if(!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $reply)) $rn = "\r\n";
 			else $rn = "\n";
 			$header = "From: \"".$name2."\"<".$reply.">".$rn;
+			$header = "Reply-To: \"".$name2."\"<".$reply.">".$rn;
 			$header.= "MIME-Version: 1.0".$rn;
+			$header.= "X-Mailer: PHP/".phpversion().$rn;
 			$header.= "Content-Type: multipart/alternative;".$rn." boundary=\"$boundary\"".$rn;
 			$msg= $rn."--".$boundary.$rn;
 			$msg.= "Content-Type: text/plain; charset=\"utf-8\"".$rn;
@@ -114,7 +118,9 @@ if(isset($_POST['action'])) {
 					if(!preg_match("#^[a-z0-9._-]+@(hotmail|live|msn).[a-z]{2,4}$#", $mailadm)) $rn = "\r\n";
 					else $rn = "\n";
 					$header = "From: \"".$name."\"<".$mailadm.">".$rn;
+					$header = "Reply-To: \"".$name."\"<".$mailadm.">".$rn;
 					$header.= "MIME-Version: 1.0".$rn;
+					$header.= "X-Mailer: PHP/".phpversion().$rn;
 					$header.= "Content-Type: multipart/alternative;".$rn." boundary=\"$boundary\"".$rn;
 					$msg= $rn."--".$boundary.$rn;
 					$msg.= "Content-Type: text/plain; charset=\"utf-8\"".$rn;

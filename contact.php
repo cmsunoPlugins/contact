@@ -76,6 +76,11 @@ if(isset($_POST['action'])) {
 					<td><input type="checkbox" class="input" name="contactReply" id="contactReply" /></td>
 					<td><em><?php echo T_("Reply to the first email field if exists. Default is admin email.");?></em></td>
 				</tr>
+				<tr>
+					<td><label><?php echo T_("CSS Class");?></label></td>
+					<td><input type="text" class="input" name="contactClass" id="contactClass" /></td>
+					<td><em><?php echo T_("Additional CSS class for this contact block. Only alphanumeric characters.");?></em></td>
+				</tr>
 			</table>
 			<h3><?php echo T_("Add a field :");?></h3>
 			<table class="hForm">
@@ -117,13 +122,14 @@ if(isset($_POST['action'])) {
 		$a['send'] = (stripslashes($_POST['contactSend'])?stripslashes($_POST['contactSend']):'OK');
 		$a['name'] = (!empty($_POST['contactName'])?stripslashes($_POST['contactName']):'No Reply');
 		$a['happy'] = stripslashes($_POST['contactHappy']);
+		$a['clas'] = preg_replace("/[^a-zA-Z0-9]+/", "", $_POST['contactClass']);
 		$a['subject'] = stripslashes($_POST['contactSubject']);
 		if($_POST['contactMaster']=="true" && !file_exists('../../data/contactMaster.txt')) file_put_contents('../../data/contactMaster.txt', '1');
 		else if($_POST['contactMaster']!="true" && file_exists('../../data/contactMaster.txt')) unlink('../../data/contactMaster.txt');
 		if($_POST['contactCaptcha']=="true") $a['captcha']=1; else $a['captcha']=0;
 		if($_POST['contactCopy']=="true") $a['copy']=1; else $a['copy']=0;
 		if($_POST['contactReply']=="true") $a['reply']=1; else $a['reply']=0;
-		$b = array('action','unox','contactAdmin','contactName','contactSend','contactHappy','contactCaptcha','contactSubject','contactCopy','contactMaster','contactReply');
+		$b = array('action','unox','contactAdmin','contactName','contactSend','contactHappy','contactClass','contactCaptcha','contactSubject','contactCopy','contactMaster','contactReply');
 		foreach($_POST as $k=>$v) {
 			if(!in_array($k,$b)) {
 				$a['frm'][$c]['t'] = substr($k,0,2);

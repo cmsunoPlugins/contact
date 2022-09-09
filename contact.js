@@ -10,6 +10,7 @@ function f_contact_load(){
 			if(r.name)document.getElementById('contactName').value=r.name;
 			if(r.send)document.getElementById('contactSend').value=r.send;
 			if(r.happy)document.getElementById('contactHappy').value=r.happy;
+			if(r.clas)document.getElementById('contactClass').value=r.clas;
 			if(r.subject)document.getElementById('contactSubject').value=r.subject;
 			if(r.captcha==1)document.getElementById('contactCaptcha').checked=true;else document.getElementById('contactCaptcha').checked=false;
 			if(r.copy==1)document.getElementById('contactCopy').checked=true;else document.getElementById('contactCopy').checked=false;
@@ -29,6 +30,7 @@ function f_contact_save(){
 		h.push({name:'contactName',value:document.getElementById('contactName').value});
 		h.push({name:'contactSend',value:document.getElementById('contactSend').value});
 		h.push({name:'contactHappy',value:document.getElementById('contactHappy').value});
+		h.push({name:'contactClass',value:document.getElementById('contactClass').value});
 		h.push({name:'contactSubject',value:document.getElementById('contactSubject').value});
 		h.push({name:'contactCaptcha',value:document.getElementById('contactCaptcha').checked});
 		h.push({name:'contactCopy',value:document.getElementById('contactCopy').checked});
