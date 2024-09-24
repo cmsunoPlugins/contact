@@ -40,8 +40,7 @@ This contactMailTemplate.php should create the HTML email content : $msgH. It wi
 
 ### Versions ###
 
-* 1.6.2 - 09/09/2022 : Hide send button on click to avoid multiple send.
-* 1.6.1 - 24/10/2020 : Add optionnal custom CSS Class to contact DIV Block.
+* 1.7 - 24/09/2024 : Send email via SMTP if Newsletter plugin is SMTP
 * 1.6 - 07/10/2020 : Admin can reply to email field if exists. User reply to Admin (no change).
 * 1.5 - 24/03/2020 : Master mode
 * 1.4 - 08/01/2020 : Fix PHPMailer issue - Custom template - Copy to sender - Custom subject

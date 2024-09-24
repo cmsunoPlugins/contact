@@ -58,6 +58,14 @@ if(isset($_POST['action'])) {
 		else $sujet = $a['subject'];
 		if(file_exists('../newsletter/PHPMailer/PHPMailerAutoload.php')) {
 			// PHPMailer
+			if(file_exists(dirname(__FILE__).'/../../data/_sdata-'.$sdata.'/newsletter.json')) {
+				$q = file_get_contents(dirname(__FILE__).'/../../data/_sdata-'.$sdata.'/newsletter.json');
+				$news = json_decode($q,true);
+				if(!empty($news['gmp'])) {
+					$news['gmp'] = openssl_decrypt(base64_decode($news['gmp']), 'AES-256-CBC', substr($Ukey,0,32), OPENSSL_RAW_DATA, base64_decode($news['iv']));
+					$news['gmp'] = rtrim($news['gmp'], "\0");
+				}
+			}
 			require '../newsletter/PHPMailer/PHPMailerAutoload.php';
 			$phm = new PHPMailer();
 			$phm->CharSet = "UTF-8";
@@ -69,6 +77,16 @@ if(isset($_POST['action'])) {
 			$phm->Subject = stripslashes($sujet);
 			$phm->Body = stripslashes($msgH);		
 			$phm->AltBody = stripslashes($msgT);
+			if(!empty($news['met'])) { // SMTP
+				$phm->IsSMTP();
+				$phm->SMTPDebug = 0;  // debugging: 1 = errors and messages, 2 = messages only
+				$phm->SMTPAuth = true;  // authentication enabled
+				$phm->SMTPSecure = 'tls';
+				$phm->Port = 587; 
+				$phm->Host = ($news['met']=='gmail'?'smtp.gmail.com':$news['gmh']); // 'smtp.gmail.com'...
+				$phm->Username = $news['gma'];
+				$phm->Password = utf8_encode($news['gmp']);
+			}
 			if($l>10 && $phm->send()) {
 				if(!$happy) echo T_('OK');
 				else echo ' '.$happy;
